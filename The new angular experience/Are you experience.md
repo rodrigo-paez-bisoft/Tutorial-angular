@@ -1,6 +1,11 @@
 # Angular
 
 ### comandos
+para crear el entorno
+
+* npm install -g @angular/cli
+* ng version
+* ng new mi-proyecto
 
 para crear componentes
 
