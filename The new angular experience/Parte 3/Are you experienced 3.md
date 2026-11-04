@@ -17,3 +17,62 @@ export const routes: Routes = [
 ];
 
 ```
+## 17.RouterLink
+
+Para este caso se ha modificado el header de la siguiente manera
+
+```html
+<main>
+    <header>
+        <img src="/logo.svg" alt="aqui va el logo">
+    </header>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/movies">Movies</a></li>
+        <li><a href="/create">Create Movie</a></li>
+    </ul>
+</main>
+```
+y con el estilo de:
+
+```css
+main{
+    margin: 10px;
+    border: 5px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+ul{
+    list-style-type: none;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+ul li:nth-child(1) {
+    justify-self: start;
+}
+
+ul li:nth-child(2) {
+    justify-self: center;
+}
+
+ul li:nth-child(3) {
+    justify-self: end;
+}
+```
