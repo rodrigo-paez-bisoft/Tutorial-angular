@@ -2,35 +2,121 @@
 
 ## 10. Constructores
 
-![alt text](imagenes/10%20Constructor/ejemplo%20constructor.jpg)
+<!-- ![alt text](imagenes/10%20Constructor/ejemplo%20constructor.jpg) -->
+#### app.ts
+```ts
+export class App{
+  userName: string;
+  constructor(){
+    this.userName = "Rodrigo";
+  }
+}
+```
 
 Así de sencillo es el metodo constructor
 
 ## 11. Models
 
 La razon de los models es que cuando inicializas un constructor a veces necesitas un tipo de objeto como en este caso los product, pero en este caso solo esta infiriendo los tipos y son datos no estructurados
-![alt text](imagenes/11%20Models/Problematica.png)
+<!-- ![alt text](imagenes/11%20Models/Problematica.png) -->
+#### app.ts
+```ts
+export class App{
+  userName: string;
+  myNumber: number = 0;
+  myBoolean: boolean = true;
+  product;
+  constructor(){
+    this.userName = "Rodrigo";
+    this.myNumber = 5;
+    this.myBoolean= false;
+
+    this.product = {
+      name: "Laptop",
+      price: 1000,
+      isAvailable: true
+    };
+  }
+}
+
+```
 
 por lo cual se necesita para poder tipar esos objetos, hacer un modelo
 
-![alt text](imagenes/11%20Models/Interfaz.png)
+<!-- ![alt text](imagenes/11%20Models/Interfaz.png) -->
+#### Models/Product.ts
+```ts
+export default interface Product{
+  name: string;
+  price: number;
+  isAvailable: boolean;
+}
+```
 
 ese es la sintaxis basica para las interfaces 
-![alt text](imagenes/11%20Models/sintaxis-ts.png)
-
+<!-- ![alt text](imagenes/11%20Models/sintaxis-ts.png) -->
+```ts
+import Product from './Models/Product';
+@Component({
+  imports: [Header,NgClass],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html'
+})
+export class App{
+  userName: string;
+  myNumber: number = 0;
+  myBoolean: boolean = true;
+  product: Product;
+  constructor(){
+    this.userName = "Rodrigo";
+    this.product = {
+      name: "Laptop",
+      price: 1000,
+      isAvailable: true
+    };
+  }
+}
+```
 ## 12. ngClass
 La directiva ngClass nos permite crear clases dinamicas y dar estilos a los proyectos segun se cumplan algunas condiciones
 
-![alt text](imagenes/12%20ngClass/ngClass-ts.png)
+<!-- ![alt text](imagenes/12%20ngClass/ngClass-ts.png) -->
+```ts
+import { Component } from '@angular/core';
+import { Header } from '/Components/header/header';
+import { NgClass } from '@angular/common';
 
+@Component({
+  imports: [Header,NgClass],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html'
+})
+export class App{
+  isDarkMode: boolean = true;
+  toggleDarkMode(){
+    this.isDarkMode = !this.isDarkMode;
+  }
+}
+```
 primero se importa NgClass.
 
 ahora para usar el ngClass se usara de ejemplo hacer una etiqueta que cambie a modo oscuro, se crea el boolean isDarkMode, despues la funcion toggleDarkMode.
 
 el estilo cambia a la clase que se da en css con la siguientes propiedades <br>
-![alt text](image.png)
-
-![alt text](image-1.png)
+<!-- ![alt text](image.png) -->
+```css
+.dark{
+  background-color: black;
+  color: white;
+}
+```
+```html
+<app-header></app-header>
+<h2 [ngClass]="{dark: isDarkMode}">Welcome to my app</h2>
+```
+<!-- ![alt text](image-1.png) -->
 ahora en la etiqueta h2 se coloca el ngClass y la propiedad de css que cambia y la propiedad ts que evalua {css: ts}.
 
 para disparar el evento se configura un boton que al hacer click ejecute el metodo toggleDarkMode definido en el ts

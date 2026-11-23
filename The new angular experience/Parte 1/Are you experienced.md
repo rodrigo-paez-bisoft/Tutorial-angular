@@ -12,24 +12,71 @@ para crear componentes
 * ng g c Components/
 
 ## 1. data binding
+#### app.ts
 Se crea la variable 
-![](imagenes/01%20binding/Sin%20título.jpg)
+<!-- ![](imagenes/01%20binding/Sin%20título.jpg)  -->
+```ts
+import { Component } from '@angular/core';
+import { Header } form './Components/header/header';
+@Component({
+  imports: [Header],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  userName: string = 'Rodrigo';
+}
+```
+#### app.html
 Se usa la notacion de bigote o doble llave <br>
-![](imagenes/01%20binding/doble%20llave%20para%20binding.jpg)
+<!-- ![](imagenes/01%20binding/doble%20llave%20para%20binding.jpg) -->
+```html
+<app-header></app-header>
+<h1>Welcome {{userName}}</h1>
+```
 para otros componentes se usa corchetes 
-![](imagenes/01%20binding/corchetes.png)
+<!-- ![](imagenes/01%20binding/corchetes.png) -->
+```html
+<app-header></app-header>
+<h1>Welcome {{userName}}</h1>
+<input type="text" [value]="userName">
+```
 
-el resultado es <br>
+### el resultado es <br>
 
 ![alt text](imagenes/01%20binding/resultado.png)
 
 ## 2. Eventos
 
 Se agrega la variable y la funcion para el evento
-![](imagenes/02%20Eventos/class.jpg)
+<!-- ![](imagenes/02%20Eventos/class.jpg) -->
+
+```ts
+import { Component } from '@angular/core';
+import { Header } form './Components/header/header';
+@Component({
+  imports: [Header],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  number: number=0;
+
+  addOne(){
+    this.number++;
+  }
+}
+```
 
 Se manda a llamar el evento desde el html
-![](imagenes/02%20Eventos/htm.jpg)
+<!-- ![](imagenes/02%20Eventos/htm.jpg) -->
+
+```html
+<app-header></app-header>
+<h1 (click)="addOne()">number: {{ number }}</h1>
+```
 
 Esto da como resultado que al dar click al titulo suma 1
 
@@ -43,10 +90,30 @@ double data binding es para que pueda modificar desde otro componente
 () ==> para los eventos, en este caso html a ts
 
 se importa FormsModule
-![](imagenes/03%20binding%20bidireccional/FormsModule.jpg)
-se agrega ngModel
-![](imagenes/03%20binding%20bidireccional/Sin%20título.jpg)
+<!-- ![](imagenes/03%20binding%20bidireccional/FormsModule.jpg) -->
+```ts
+import { Component } from '@angular/core';
+import { Header } form './Components/header/header';
+import { FormsModule } from '@angular/forms';
+@Component({
+  imports: [Header,FormsModule],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  userName: string = 'Rodrigo';
+}
 
+```
+
+se agrega ngModel
+<!-- ![](imagenes/03%20binding%20bidireccional/Sin%20título.jpg) -->
+```html
+<app-header></app-header>
+<h1>Welcome, {{userName}}</h1>
+<input type="text" [(ngModel)]="userName" placeholder="enter your name"/>
+```
 da como resultado <br>
 ![](imagenes/03%20binding%20bidireccional/resultado.jpg)
 
@@ -54,40 +121,118 @@ da como resultado <br>
 
 Se agrega una condicion booleana al ts
 
-![](imagenes/04%20if/boolean.png)
+<!-- ![](imagenes/04%20if/boolean.png) -->
+#### app.ts
+```ts
+import { Component } from '@angular/core';
+import { Header } form './Components/header/header';
+import { FormsModule } from '@angular/forms';
+@Component({
+  imports: [Header,FormsModule],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  condition: boolean = true; 
+}
+
+```
 
 Se pone el if en el html para que evalue
-![](imagenes/04%20if/if.png)
+<!-- ![](imagenes/04%20if/if.png) -->
+```html
+<app-header></app-header>
+<h2>la condicion se cumple</h2>
+```
 
 resultado
+
 ![](imagenes/04%20if/resultado.jpg)
 
 ## 5. for
 Los bucles for son muy sencillos son igual que el if
 
-![](imagenes/05%20for/ts.jpg)
+<!-- ![](imagenes/05%20for/ts.jpg) -->
+#### app.ts
+```ts
+import { Component } from '@angular/core';
+import { Header } form './Components/header/header';
+@Component({
+  imports: [Header],
+  selector: 'app-root',
+  styleUrl: './app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  movies: string [] = ['The Return of the Dungeon Synth','A New Hope', 'The Dark Side of The Moon'];
+}
+```
+<!-- ![](imagenes/05%20for/html.jpg) -->
+#### app.html
+```html
+<app-header></app-header>
+@for(movie of movies; track movie){
+  <p>{{movie}}</p>
+}
 
-![](imagenes/05%20for/html.jpg)
-
+```
 ![](imagenes/05%20for/resultado.png)
 
 ## 6. Input
 Componentes hijos <br>
 primero se crea el componente
 ![](imagenes/06%20input%20padre-hijo/crear%20componente.jpg)
-
+```
+ng g c Components/child
+```
+#### child.ts
 despues se importa input
-![](imagenes/06%20input%20padre-hijo/input%20child.jpg)
-
+<!-- ![](imagenes/06%20input%20padre-hijo/input%20child.jpg) -->
+```ts
+import {Component, Input } from '@angular/core';
+@Component({
+  imports: [],
+  selector: 'app-child',
+  styleUrl:'./child.css',
+  templateUrl: './child.html',
+})
+export class Child {
+  @Input()
+  msg: string = '';
+  @Input()
+  person: any = {};
+}
+```
+#### child.html
 se agregan los cambios al componente hijo
-![](imagenes/06%20input%20padre-hijo/html%20child.jpg)
-
+<!-- ![](imagenes/06%20input%20padre-hijo/html%20child.jpg) -->
+```html
+<p>{{nsg}}</p>
+```
 se incorpora al ts padre
-![](imagenes/06%20input%20padre-hijo/ts%20padre.jpg)
-
+<!-- ![](imagenes/06%20input%20padre-hijo/ts%20padre.jpg) -->
+```ts
+import { Component } from '@angular/core';
+import { Header } from './Components/header/header';
+import { FormsModule } from '@angular/forms';
+import { Child } from './Components/child/child';
+@Component({
+  imports: [Header, FormsModule, Child],
+  selector: 'app-root',
+  styleUrl:'./app.css',
+  templateUrl: './app.html',
+})
+export class App{
+  text: string = 'hello world';
+}
+```
 y se incorpora al html
-![](imagenes/06%20input%20padre-hijo/html%20padre.jpg)
-
+<!-- ![](imagenes/06%20input%20padre-hijo/html%20padre.jpg) -->
+```html
+<app-header></app-header>
+<app-child [msg]="text"></app-child>
+```
 ![](imagenes/06%20input%20padre-hijo/Person.jpg)
 ![](imagenes/06%20input%20padre-hijo/persona.jpg)
 ## 7. Signals
@@ -98,7 +243,14 @@ Funciona exactamente como Input, con la diferencia que tiene mejor
 ### para aumentar la dificultad se integro con un ciclo for
 
 Primero se agrega una interfaz para el objeto Person
-![](imagenes/07%20Input%20signals/Interfaz%20person.jpg)
+<!-- ![](imagenes/07%20Input%20signals/Interfaz%20person.jpg) -->
+```ts
+export default interface Person{
+  name: string;
+  age: number;
+  sex: string;
+}
+```
 En esta imagen se agrego dos objetos de la interfaz person, se adapto el signal para el array
 ![](imagenes/07%20Input%20signals/app%20signals%20for.jpg)
 Al typescript del hijo se le declaro el arreglo vacio con input, se arregla required para pueda tomar la interfaz
@@ -200,7 +352,24 @@ name: string ="";
 ## 9. Output signal
 
 para este solo se cambia el componente y se importa output<br>
-![](imagenes/08%20Output/output%20signal.png)
+<!-- ![](imagenes/08%20Output/output%20signal.png) -->
+#### child.ts
+```ts
+import { Component, output } from '@angular/core';
+@Component({
+  imports: [],
+  selector: 'app-child',
+  styleUrl: './child.css',
+  templateUrl: './child.html',
+})
+export class Child{
+  userName: string = "Rodrigo";
+  login = output<any>();
+  handleLogin(){
+    this.login.emit(this.userName)M
+  }
+}
+```
 
 El resultado es <br>
 
